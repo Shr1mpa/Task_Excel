@@ -18,13 +18,7 @@ sealed class Cell {
         override fun evaluate(table: Table): Any? {
             if (cached != null) return cached
 
-            val parts = formula.removePrefix("=").split('+').map { it.trim() }
-
-            val values = parts.map { labelStr ->
-                val label = Label.fromString(labelStr) ?: return@map "!err"
-                val cell = table.getCellByLabel(label) ?: return@map "!err"
-                cell.evaluate(table)
-            }
+            val values = FormulaParser.parse(formula, table)
 
             if (values.any { it == "!err" }) {
                 cached = "!err"

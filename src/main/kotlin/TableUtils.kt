@@ -2,7 +2,7 @@ package org.example
 
 class TableUtils {
     companion object {
-        fun buildInteractive(): Table {
+        fun build(): Table {
             print("Введіть кількість рядків: ")
             val rows = readln().toInt()
 

@@ -4,14 +4,12 @@ sealed class Cell {
     abstract fun evaluate(table: Table): Any?
     abstract fun display(): String
 
-    class NumberCell(private val value: Double) : Cell() {
+    class ValueCell<T>(private val value: T) : Cell() {
         override fun evaluate(table: Table) = value
-        override fun display() = value.toString()
-    }
-
-    class TextCell(private val text: String) : Cell() {
-        override fun evaluate(table: Table) = text
-        override fun display() = "\"$text\""
+        override fun display(): String = when (value) {
+            is String -> "\"$value\""
+            else -> value.toString()
+        }
     }
 
     class FormulaCell(private val formula: String) : Cell() {
@@ -21,8 +19,11 @@ sealed class Cell {
             if (cached != null) return cached
 
             val parts = formula.removePrefix("=").split('+').map { it.trim() }
-            val values = parts.map { label ->
-                table.getCellByLabel(label)?.evaluate(table)
+
+            val values = parts.map { labelStr ->
+                val label = Label.fromString(labelStr) ?: return "!err"
+                val cell = table.getCellByLabel(label) ?: return "!err"
+                cell.evaluate(table)
             }
 
             cached = when {
@@ -46,11 +47,10 @@ sealed class Cell {
         fun fromInput(input: String): Cell {
             return when {
                 input.startsWith("=") -> FormulaCell(input)
-                input.startsWith("\"") && input.endsWith("\"") -> TextCell(input.removeSurrounding("\""))
-                input.toDoubleOrNull() != null -> NumberCell(input.toDouble())
+                input.startsWith("\"") && input.endsWith("\"") -> ValueCell(input.removeSurrounding("\""))
+                input.toDoubleOrNull() != null -> ValueCell(input.toDouble())
                 else -> ErrorCell
             }
         }
     }
 }
-

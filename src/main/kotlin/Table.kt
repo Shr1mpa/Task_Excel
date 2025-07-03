@@ -9,10 +9,15 @@ class Table(val rows: Int, val cols: Int) {
 
     fun getCell(row: Int, col: Int): Cell = grid[row][col]
 
+    fun getCellByLabel(label: Label): Cell? {
+        return if (label.row in 0 until rows && label.col in 0 until cols) {
+            grid[label.row][label.col]
+        } else null
+    }
+
     fun getCellByLabel(label: String): Cell? {
-        val col = label[0].uppercaseChar() - 'A'
-        val row = label.substring(1).toIntOrNull()?.minus(1) ?: return null
-        return if (row in 0 until rows && col in 0 until cols) grid[row][col] else null
+        val parsed = Label.fromString(label) ?: return null
+        return getCellByLabel(parsed)
     }
 
     fun forEachCell(action: (row: Int, col: Int, cell: Cell) -> Unit) {

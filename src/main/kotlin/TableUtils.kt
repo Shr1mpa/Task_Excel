@@ -15,8 +15,8 @@ class TableUtils {
 
             for (r in 0 until rows) {
                 for (c in 0 until cols) {
-                    val label = "${('A' + c)}${r + 1}"
-                    print("$label: ")
+                    val label = Label(r, c)
+                    print("${label}: ")
                     val input = readln()
                     table.setCell(r, c, Cell.fromInput(input))
                 }
@@ -36,8 +36,8 @@ class TableUtils {
 
             print("     ")
             for (c in 0 until table.cols) {
-                val label = "${('A' + c)}"
-                print(label.padEnd(10))
+                val colLabel = Label(0, c).toString().takeWhile { it.isLetter() }
+                print(colLabel.padEnd(10))
             }
             println()
 

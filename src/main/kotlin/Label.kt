@@ -9,8 +9,8 @@ data class Label(val row: Int, val col: Int) {
             return Label(row, col)
         }
 
-        fun toString(row: Int, col: Int): String {
-            return "${('A' + col)}${row + 1}"
-        }
+    }
+    override fun toString(): String {
+        return "${('A' + col)}${row + 1}"
     }
 }

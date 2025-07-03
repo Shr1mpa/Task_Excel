@@ -21,14 +21,18 @@ sealed class Cell {
             val parts = formula.removePrefix("=").split('+').map { it.trim() }
 
             val values = parts.map { labelStr ->
-                val label = Label.fromString(labelStr) ?: return "!err"
-                val cell = table.getCellByLabel(label) ?: return "!err"
+                val label = Label.fromString(labelStr) ?: return@map "!err"
+                val cell = table.getCellByLabel(label) ?: return@map "!err"
                 cell.evaluate(table)
             }
 
+            if (values.any { it == "!err" }) {
+                cached = "!err"
+                return cached
+            }
             cached = when {
-                values.all { it is Double } -> (values[0] as Double) + (values[1] as Double)
-                values.all { it is String } -> (values[0] as String) + (values[1] as String)
+                values.all { it is Double } -> values.sumOf { it as Double }.toString()
+                values.all { it is String } -> values.joinToString(separator = "") { it as String }
                 else -> "!err"
             }
 

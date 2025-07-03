@@ -15,10 +15,6 @@ class Table(val rows: Int, val cols: Int) {
         } else null
     }
 
-    fun getCellByLabel(label: String): Cell? {
-        val parsed = Label.fromString(label) ?: return null
-        return getCellByLabel(parsed)
-    }
 
     fun forEachCell(action: (row: Int, col: Int, cell: Cell) -> Unit) {
         for (r in 0 until rows) {

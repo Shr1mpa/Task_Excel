@@ -18,7 +18,7 @@ class TableUtils {
                     val label = Label(r, c)
                     print("${label}: ")
                     val input = readln()
-                    table.setCell(r, c, Cell.fromInput(input))
+                    table.setCell(r, c, Cell.fromInput(input, table))
                 }
             }
 
@@ -27,7 +27,7 @@ class TableUtils {
 
         fun evaluate(table: Table) {
             table.forEachCell { row, col, cell ->
-                cell.evaluate(table)
+                cell.evaluate()
             }
         }
 

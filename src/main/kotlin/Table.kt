@@ -1,6 +1,6 @@
 package org.example
 
-class Table(val rows: Int, val cols: Int) {
+class Table(val rows: Int, val cols: Int) : EvaluationContext {
     private val grid: Array<Array<Cell>> = Array(rows) { Array(cols) { Cell.ErrorCell } }
 
     fun setCell(row: Int, col: Int, cell: Cell) {
@@ -23,4 +23,6 @@ class Table(val rows: Int, val cols: Int) {
             }
         }
     }
+
+    override fun getCell(label: Label): Cell? = getCellByLabel(label)
 }

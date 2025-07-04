@@ -3,12 +3,9 @@ package org.example
 class TableUtils {
     companion object {
         fun build(): Table {
-            print("Введіть кількість рядків: ")
-            val rows = readln().toInt()
-
-            print("Введіть кількість колонок: ")
-            val cols = readln().toInt()
-
+            val size = requestTableSize()
+            val rows = size.first
+            val cols = size.second
             val table = Table(rows, cols)
 
             println("Введіть дані:")
@@ -23,6 +20,21 @@ class TableUtils {
             }
 
             return table
+        }
+
+        private fun requestTableSize(): Pair<Int, Int> {
+            val rows = readInt("Введіть кількість рядків: ")
+            val cols = readInt("Введіть кількість колонок: ")
+            return Pair(rows, cols)
+        }
+
+        private fun readInt(prompt: String): Int {
+            while (true) {
+                print(prompt)
+                val input = readln()
+                input.toIntOrNull()?.let { return it }
+                println("Помилка: введіть ціле число.")
+            }
         }
 
         fun evaluate(table: Table) {

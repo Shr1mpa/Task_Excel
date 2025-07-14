@@ -1,4 +1,7 @@
-package org.example
+package org.example.domain.model
+
+import org.example.domain.model.EvaluationContext
+import org.example.domain.logic.FormulaParser
 
 sealed class Cell {
     abstract fun evaluate(): Any?

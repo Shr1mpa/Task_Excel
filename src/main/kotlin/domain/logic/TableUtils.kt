@@ -1,4 +1,8 @@
-package org.example
+package org.example.domain.logic
+
+import org.example.domain.model.Cell
+import org.example.domain.model.Label
+import org.example.domain.model.Table
 
 class TableUtils {
     companion object {
@@ -15,7 +19,7 @@ class TableUtils {
                     val label = Label(r, c)
                     print("${label}: ")
                     val input = readln()
-                    table.setCell(r, c, Cell.fromInput(input, table))
+                    table.setCell(r, c, Cell.Companion.fromInput(input, table))
                 }
             }
 

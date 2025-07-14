@@ -1,4 +1,4 @@
-package org.example
+package org.example.domain.model
 
 data class Label(val row: Int, val col: Int) {
     companion object {

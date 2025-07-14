@@ -1,4 +1,7 @@
-package org.example
+package org.example.domain.model
+
+import org.example.domain.model.EvaluationContext
+import org.example.domain.model.Label
 
 class Table(val rows: Int, val cols: Int) : EvaluationContext {
     private val grid: Array<Array<Cell>> = Array(rows) { Array(cols) { Cell.ErrorCell } }

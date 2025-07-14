@@ -10,15 +10,15 @@ class TableController {
     private var currentTable: Table? = null
 
     fun createNewTable() {
-        currentTable = TableUtils.Companion.build()
+        currentTable = TableUtils.build()
     }
 
     fun evaluateTable() {
-        currentTable?.let { TableUtils.Companion.evaluate(it) }
+        currentTable?.let { TableUtils.evaluate(it) }
     }
 
     fun printTable() {
-        currentTable?.let { TableUtils.Companion.print(it, "Поточна таблиця") }
+        currentTable?.let { TableUtils.print(it, "Поточна таблиця") }
     }
 
     suspend fun loadFromServer(): Boolean {
